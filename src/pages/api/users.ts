@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Page } from '@/types/Page';
 import { User } from '@/types/User';
@@ -8,20 +7,17 @@ export default async function handler(
   res: NextApiResponse<Page<User>[]>
 ) {
   const token = process.env.GITHUB_TOKEN;
-  const headers = token
-    ? {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      }
-    : undefined;
-  const { q, pageParam } = req.query;
+  const { q, page } = req.query;
+
   const response = await fetch(
-    `${
-      process.env.API_URL
-    }/search/users?q=${q}&per_page=${20}&page=${pageParam}`,
-    headers
+    `${process.env.API_URL}/search/users?q=${q}&per_page=${20}&page=${page}`,
+    {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    }
   );
+
   if (!response.ok) throw new Error(response.statusText);
 
   const data = await response.json();

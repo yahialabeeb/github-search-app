@@ -5,16 +5,17 @@ const getLanguages = async (
   repo: string,
   language: string | null
 ) => {
+  // no need to hit Languages url since no Languages
   if (!language) return [];
   const res = await fetch(`/api/languages?owner=${owner}&repo=${repo}`);
-  const a = await res.json();
-  return Object.keys(a);
+  return Object.keys(await res.json());
 };
 
 const getForks = async (owner: string, repo: string, forks: number) => {
+  // no need to hit forks url since no forks
   if (!forks) return [];
   const res = await fetch(`/api/forkers?owner=${owner}&repo=${repo}`);
-  return res.json();
+  return await res.json();
 };
 
 export function useRepoDetails(
@@ -27,7 +28,11 @@ export function useRepoDetails(
     queryKey: ['repoLanguages', owner, repo],
     queryFn: () => getLanguages(owner, repo, language),
   });
-  const { data: forkers = [], isLoading: isLoadingForks } = useQuery({
+  const {
+    data: forkers = [],
+    isLoading: isLoadingForks,
+    error,
+  } = useQuery({
     queryKey: ['repoForks', owner, repo],
     queryFn: () => getForks(owner, repo, forks),
   });
@@ -36,5 +41,6 @@ export function useRepoDetails(
     languages,
     forkers,
     isLoading: isLoadingLang || isLoadingForks,
+    error,
   };
 }

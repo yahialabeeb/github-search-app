@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-interface props {
+interface FetchGithubProps {
   pageParam?: number;
   queryKey: string[];
 }
 
-const fetchGithub = async ({ pageParam = 1, queryKey }: props) => {
+const fetchGithub = async ({ pageParam = 1, queryKey }: FetchGithubProps) => {
   const [, query, type] = queryKey;
   const response = await fetch(
     `/api/${type}?q=${query}&per_page=${20}&page=${pageParam}`
@@ -26,5 +26,8 @@ export function useGithubSearch(query: string, type: 'users' | 'repositories') {
       return allPages.length + 1;
     },
     enabled: query.length > 1,
+    retry: 2,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
   });
 }

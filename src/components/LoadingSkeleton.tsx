@@ -11,7 +11,7 @@ export default function LoadingSkeleton() {
         alignItems: 'center',
       }}
     >
-      {Array.from(Array(6)).map((i) => (
+      {Array.from(Array(6)).map((_, i) => (
         <Grid
           size={1}
           key={i}

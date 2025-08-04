@@ -15,6 +15,7 @@ export default function ResultListing({ data, type }: Props) {
           spacing={{ xs: 2, md: 3 }}
           sx={{
             alignItems: 'center',
+            mt: 4,
           }}
           key={i}
         >
