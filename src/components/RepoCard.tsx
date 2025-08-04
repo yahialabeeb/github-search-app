@@ -1,22 +1,19 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  Avatar,
-  Chip,
-  Box,
-  Link,
-  Stack,
-} from '@mui/material';
+import { Typography, Chip, Box, Link, Grid, Paper } from '@mui/material';
 import { useRepoDetails } from '../hooks/useRepoDetails';
 import { Repo } from '../types/Repo';
 import { User } from '../types/User';
+import ForkersList from './ForkersList';
+import { Page } from '@/types/Page';
 
 interface Props {
   repo: Repo;
 }
 
-export default function RepoCard({ repo }: Props) {
+interface RepoListingProps {
+  page: Page<Repo>;
+}
+
+function RepoCard({ repo }: Props) {
   const { languages, forkers, isLoading } = useRepoDetails(
     repo.owner.login,
     repo.name,
@@ -25,13 +22,20 @@ export default function RepoCard({ repo }: Props) {
   );
 
   return (
-    <Card sx={{ marginY: 4, borderTopColor: '#000' }}>
-      <CardContent>
+    <Grid size={{ xs: 4, lg: 2 }}>
+      <Paper
+        sx={{
+          height: { xs: 'fit-content', md: 320 },
+          padding: { xs: 2, sm: 4 },
+          borderTopColor: '#000',
+        }}
+      >
         <Typography variant='h5'>
           <Link
             href={repo.html_url}
             target='_blank'
             rel='noopener'
+            sx={{ wordBreak: 'break-all' }}
           >
             {repo.full_name}
           </Link>
@@ -39,6 +43,7 @@ export default function RepoCard({ repo }: Props) {
         <Typography
           variant='h6'
           color='textSecondary'
+          width={'fit-content'}
         >
           ⭐ {repo.stargazers_count} | forks: {repo.forks_count}
         </Typography>
@@ -60,38 +65,25 @@ export default function RepoCard({ repo }: Props) {
           ))}
         </Box>
 
-        {/* Forkers */}
-        {forkers.length > 0 && (
-          <div>
-            <Typography variant='subtitle2'>Recent Forkers:</Typography>
-            <Stack
-              direction='row'
-              spacing={4}
-              alignItems='center'
-            >
-              {forkers?.map(({ owner }: { owner: User }) => (
-                <Stack
-                  direction='row'
-                  spacing={2}
-                  alignItems='center'
-                  key={'fork' + owner.id}
-                >
-                  <Avatar
-                    src={owner.avatar_url}
-                    alt={owner.login}
-                    sx={{ width: 32, height: 32 }}
-                  />
-                  <Typography variant='subtitle1'>{owner.login}</Typography>
-                </Stack>
-              ))}
-            </Stack>
-          </div>
-        )}
+        <ForkersList forkers={forkers} />
 
         {isLoading && (
           <Typography variant='caption'>Loading details...</Typography>
         )}
-      </CardContent>
-    </Card>
+      </Paper>
+    </Grid>
+  );
+}
+
+export default function RepoListing({ page }: RepoListingProps) {
+  return (
+    <>
+      {page.items.map((repo: Repo) => (
+        <RepoCard
+          key={repo.id}
+          repo={repo}
+        />
+      ))}
+    </>
   );
 }

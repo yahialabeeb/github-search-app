@@ -3,31 +3,27 @@ import RepoCard from '../components/RepoCard';
 import type { User } from '../types/User';
 import type { Repo } from '../types/Repo';
 import type { Page } from '../types/Page';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 export default function ResultListing({ data, type }: Props) {
   return (
-    <Box
-      gap={5}
-      mt={4}
-      width={'100%'}
-    >
+    <Box mt={4}>
       {data?.pages?.map((page, i) => (
-        <div key={i}>
-          {page.items.map((item) =>
-            type === 'users' ? (
-              <UserCard
-                key={item.id}
-                user={item as User}
-              />
-            ) : (
-              <RepoCard
-                key={item.id}
-                repo={item as Repo}
-              />
-            )
+        <Grid
+          columns={4}
+          container
+          spacing={{ xs: 2, md: 3 }}
+          sx={{
+            alignItems: 'center',
+          }}
+          key={i}
+        >
+          {type === 'users' ? (
+            <UserCard page={page as Page<User>} />
+          ) : (
+            <RepoCard page={page as Page<Repo>} />
           )}
-        </div>
+        </Grid>
       ))}
     </Box>
   );

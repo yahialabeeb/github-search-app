@@ -7,9 +7,10 @@ import LoadingMessage from './LoadingMessage';
 import ErrorMessage from './ErrorMessage';
 import EmptyResult from './EmptyResult';
 import SearchMessage from './SearchMessage';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
+import LoadingSkeleton from './LoadinSkeleton';
 
-export default function Home() {
+export default function MainPage() {
   const [query, setQuery] = useState('');
   const [type, setType] = useState<'users' | 'repositories'>('users');
 
@@ -40,7 +41,7 @@ export default function Home() {
   }, [hasNextPage, fetchNextPage]);
 
   return (
-    <Box sx={{ width: '98vw' }}>
+    <Container>
       <SearchBar
         onSearch={handleSearch}
         setType={setType}
@@ -48,7 +49,7 @@ export default function Home() {
       />
 
       {status === 'pending' &&
-        (!!query ? <LoadingMessage /> : <SearchMessage />)}
+        (!!query ? <LoadingSkeleton /> : <SearchMessage />)}
       {status === 'error' && <ErrorMessage />}
       {status === 'success' &&
         (data?.pages[0]?.items?.length ? (
@@ -57,8 +58,6 @@ export default function Home() {
             display='flex'
             flexDirection='column'
             justifyContent='center'
-            marginX={'auto'}
-            width={'60%'}
           >
             <ResultListing
               data={data!}
@@ -73,6 +72,6 @@ export default function Home() {
         ) : (
           <EmptyResult type={type} />
         ))}
-    </Box>
+    </Container>
   );
 }
