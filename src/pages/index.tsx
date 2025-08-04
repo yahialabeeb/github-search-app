@@ -1,7 +1,6 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { Geist, Geist_Mono } from 'next/font/google';
-import styles from 'src/styles/Home.module.css';
+import MainPage from 'src/components/MainPage';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -20,7 +19,7 @@ export default function Home() {
         <title>GitHub Search App</title>
         <meta
           name='description'
-          content='Search for Github Repo and users'
+          content='Search for Github Repos and Users'
         />
         <meta
           name='viewport'
@@ -31,15 +30,9 @@ export default function Home() {
           href='/github-icon.svg'
         />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
-        <main className={styles.main}>
-          <h1>hi</h1>
-        </main>
-
-        <footer className={styles.footer}></footer>
-      </div>
+      <main className={`${geistSans.variable} ${geistMono.variable}`}>
+        <MainPage />
+      </main>
     </>
   );
 }
