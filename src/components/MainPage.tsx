@@ -1,30 +1,35 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import SearchBar from './SearchBar';
-import { useGithubSearch } from '../hooks/useGitHubSearch';
+import { useGithubSearch } from '@/hooks/useGitHubSearch';
 import ResultListing from './ResultListing';
-import { debounce } from '@mui/material/utils';
+import debounce from 'lodash.debounce';
 import LoadingMessage from './LoadingMessage';
 import ErrorMessage from './ErrorMessage';
 import EmptyResult from './EmptyResult';
 import SearchMessage from './SearchMessage';
 import { Box, Container } from '@mui/material';
-import LoadingSkeleton from './LoadinSkeleton';
+import LoadingSkeleton from './LoadingSkeleton';
 
 export default function MainPage() {
   const [query, setQuery] = useState('');
   const [type, setType] = useState<'users' | 'repositories'>('users');
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, status, fetchNextPage, hasNextPage } = useGithubSearch(
     query,
     type
   );
 
-  const debouncedSearch = useCallback(debounce(setQuery, 500), [
-    setQuery,
-    debounce,
-  ]);
+  const debouncedSearch = debounce(setQuery, 500);
+
   const handleSearch = (val: string) => debouncedSearch(val);
-  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  // clean up debounced
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   useEffect(() => {
     if (!observerRef.current || !hasNextPage) return;

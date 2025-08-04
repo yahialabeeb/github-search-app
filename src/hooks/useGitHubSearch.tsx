@@ -6,7 +6,7 @@ interface props {
 }
 
 const fetchGithub = async ({ pageParam = 1, queryKey }: props) => {
-  const [_, query, type] = queryKey;
+  const [, query, type] = queryKey;
   const response = await fetch(
     `/api/${type}?q=${query}&per_page=${20}&page=${pageParam}`
   );

@@ -7,7 +7,7 @@ import {
   Grid,
 } from '@mui/material';
 import { User } from '../types/User';
-import { Page } from 'src/types/Page';
+import { Page } from '@/types/Page';
 
 interface Props {
   page: Page<User>;

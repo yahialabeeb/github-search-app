@@ -20,7 +20,9 @@ export default function SearchBar({ onSearch, setType, type }: Props) {
     _event: React.MouseEvent<HTMLElement>,
     newType: 'users' | 'repositories'
   ) => {
-    newType ? setType(newType) : null;
+    if (newType) {
+      setType(newType);
+    }
   };
 
   return (

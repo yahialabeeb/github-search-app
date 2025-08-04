@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Page } from 'src/types/Page';
-import { Repo } from 'src/types/Repo';
+import { Page } from '@/types/Page';
+import { Repo } from '@/types/Repo';
 
 export default async function handler(
   req: NextApiRequest,

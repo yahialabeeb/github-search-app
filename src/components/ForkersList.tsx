@@ -1,5 +1,5 @@
 import { Avatar, Box, Stack, Typography } from '@mui/material';
-import { User } from 'src/types/User';
+import { User } from '@/types/User';
 
 export default function ForkersList({
   forkers,

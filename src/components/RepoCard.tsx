@@ -1,7 +1,6 @@
 import { Typography, Chip, Box, Link, Grid, Paper } from '@mui/material';
 import { useRepoDetails } from '../hooks/useRepoDetails';
 import { Repo } from '../types/Repo';
-import { User } from '../types/User';
 import ForkersList from './ForkersList';
 import { Page } from '@/types/Page';
 
