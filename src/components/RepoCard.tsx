@@ -24,7 +24,9 @@ function RepoCard({ repo }: Props) {
     <Grid size={{ xs: 4, lg: 2 }}>
       <Paper
         sx={{
-          height: { xs: 'fit-content', md: 320 },
+          minHeight: 300,
+          minWidth: { sx: '280px', lg: '350px' },
+          height: 'fit-content',
           padding: { xs: 2, sm: 4 },
           borderTopColor: '#000',
         }}

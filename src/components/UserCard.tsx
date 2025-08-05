@@ -21,7 +21,7 @@ export default function UserCard({ page }: Props) {
           size={{ xs: 2, md: 1 }}
           key={user.id}
         >
-          <Card sx={{ marginY: 4 }}>
+          <Card sx={{ marginY: 4, minWidth: { sm: 100, lg: 200 } }}>
             <CardContent
               sx={{
                 display: 'flex',

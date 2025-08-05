@@ -28,11 +28,7 @@ export function useRepoDetails(
     queryKey: ['repoLanguages', owner, repo],
     queryFn: () => getLanguages(owner, repo, language),
   });
-  const {
-    data: forkers = [],
-    isLoading: isLoadingForks,
-    error,
-  } = useQuery({
+  const { data: forkers = [], isLoading: isLoadingForks } = useQuery({
     queryKey: ['repoForks', owner, repo],
     queryFn: () => getForks(owner, repo, forks),
   });
@@ -41,6 +37,5 @@ export function useRepoDetails(
     languages,
     forkers,
     isLoading: isLoadingLang || isLoadingForks,
-    error,
   };
 }

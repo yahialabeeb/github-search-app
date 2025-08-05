@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import SearchBar from './SearchBar';
 import { useGithubSearch } from '@/hooks/useGitHubSearch';
 import ResultListing from './ResultListing';
@@ -20,19 +20,19 @@ export default function MainPage() {
     type
   );
 
-  const debouncedSearch = useMemo(
+  const debouncedSearch = useCallback(
     () =>
       debounce((value: string) => {
         setQuery(value);
-      }, 750),
+      }, 1250),
     [setQuery]
   );
-  const handleSearch = (val: string) => debouncedSearch(val);
+  const handleSearch = (val: string) => debouncedSearch()(val);
 
   // clean up debounced
   useEffect(() => {
     return () => {
-      debouncedSearch.cancel();
+      debouncedSearch().cancel();
     };
   }, [debouncedSearch]);
 
