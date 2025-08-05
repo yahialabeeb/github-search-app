@@ -59,3 +59,18 @@ npm run dev
 ```bash
 npm run test
 ```
+
+## Notes:
+
+1. I did not find any need for context or any other state management tools.
+2. Since Material UI is used in Almosafer I forced myself to use it for styling.
+3. The primary rate limit for unauthenticated requests is 60 requests per hour so [get token](https://github.com/settings/tokens).
+4. API Route was used to keep token safe on the server.
+
+## Checklist
+
+Before submitting, make sure that your program
+
+- [x] Code accompanies the Unit Tests
+- [x] Usage is clearly mentioned in the README file, This including setup the project, how to run it, how to run unit test, examples,etc
+- [x] Uses the endpoint directly

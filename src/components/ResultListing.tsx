@@ -6,6 +6,7 @@ import type { Page } from '../types/Page';
 import { Box, Grid } from '@mui/material';
 
 export default function ResultListing({ data, type }: Props) {
+  const Component = type === 'users' ? UserCard : RepoCard;
   return (
     <Box mt={4}>
       {data?.pages?.map((page, i) => (
@@ -19,11 +20,13 @@ export default function ResultListing({ data, type }: Props) {
           }}
           key={i}
         >
-          {type === 'users' ? (
-            <UserCard page={page as Page<User>} />
-          ) : (
-            <RepoCard page={page as Page<Repo>} />
-          )}
+          {page.items.map((item: Repo | User) => (
+            <Component
+              key={item.id}
+              repo={item as Repo}
+              user={item as User}
+            />
+          ))}
         </Grid>
       ))}
     </Box>

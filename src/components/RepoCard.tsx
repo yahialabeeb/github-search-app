@@ -8,11 +8,7 @@ interface Props {
   repo: Repo;
 }
 
-interface RepoListingProps {
-  page: Page<Repo>;
-}
-
-function RepoCard({ repo }: Props) {
+export default function RepoCard({ repo }: Props) {
   const { languages, forkers, isLoading } = useRepoDetails(
     repo.owner.login,
     repo.name,
@@ -73,18 +69,5 @@ function RepoCard({ repo }: Props) {
         )}
       </Paper>
     </Grid>
-  );
-}
-
-export default function RepoListing({ page }: RepoListingProps) {
-  return (
-    <>
-      {page.items.map((repo: Repo) => (
-        <RepoCard
-          key={repo.id}
-          repo={repo}
-        />
-      ))}
-    </>
   );
 }

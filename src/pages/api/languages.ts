@@ -13,7 +13,7 @@ export default async function handler(
     `${process.env.API_URL}/repos/${owner}/${repo}/languages`,
     {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: token ? `token ${token}` : '',
       },
     }
   );

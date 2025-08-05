@@ -13,7 +13,7 @@ export default async function handler(
     `${process.env.API_URL}/search/users?q=${q}&per_page=${20}&page=${page}`,
     {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: token ? `token ${token}` : '',
       },
     }
   );

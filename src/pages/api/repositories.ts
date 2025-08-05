@@ -8,14 +8,13 @@ export default async function handler(
 ) {
   const token = process.env.GITHUB_TOKEN;
   const { q, page } = req.query;
-  console.log(123, page);
   const response = await fetch(
     `${
       process.env.API_URL
     }/search/repositories?q=${q}&per_page=${20}&page=${page}`,
     {
       headers: {
-        Authorization: `token ${token}`,
+        Authorization: token ? `token ${token}` : '',
       },
     }
   );

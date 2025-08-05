@@ -24,7 +24,7 @@ export default function MainPage() {
     () =>
       debounce((value: string) => {
         setQuery(value);
-      }, 1250),
+      }, 1000),
     [setQuery]
   );
   const handleSearch = (val: string) => debouncedSearch()(val);
